@@ -17,6 +17,7 @@ import Untils.Ximage;
 import Untils.Xmail;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ASUS
  */
 public class QuanLyKhachHangFrame extends javax.swing.JFrame {
-
+    
     int TrangKH;
     int TrangLT;
     KhachHangDao daoKh;
@@ -699,7 +700,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
     private void rdoKhachQuenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoKhachQuenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdoKhachQuenActionPerformed
-
+    
 
     private void jRadioButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton17ActionPerformed
         // TODO add your handling code here:
@@ -720,7 +721,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    
 
     private void tblKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked
         if (evt.getClickCount() == 2) {
@@ -732,7 +733,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             this.StatusButton();
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
-
+    
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -748,7 +749,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTimKiem2ActionPerformed
 
     private void btnTimKiem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiem2MouseClicked
-
+        
 
     }//GEN-LAST:event_btnTimKiem2MouseClicked
 
@@ -926,7 +927,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         fillTableLT();
         StatusButton();
     }
-
+    
     void fillComboboxNhanVien() {
         DefaultComboBoxModel mol = (DefaultComboBoxModel) cbbManv.getModel();
         DefaultComboBoxModel molLT = (DefaultComboBoxModel) cbbManvLT.getModel();
@@ -940,7 +941,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             molLT.addElement(x);
         }
     }
-
+    
     KhachHang getForm() {
         KhachHang kh = new KhachHang();
         kh.setTenKH(txtHoTen.getText());
@@ -952,7 +953,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         kh.setMaKH(Integer.parseInt(txtMa.getText()));
         return kh;
     }
-
+    
     void setForm(KhachHang kh) {
         txtHoTen.setText(kh.getTenKH());
         txtEmail.setText(kh.getEmail());
@@ -965,9 +966,9 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             rdoNam.setSelected(kh.isGioiTinh());
             rdoNu.setSelected(!kh.isGioiTinh());
         }
-
+        
     }
-
+    
     void fillTable() {
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHang.getModel();
         dtm.setRowCount(0);
@@ -987,7 +988,8 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
                         kh.isGioiTinh() ? "Nam" : "Nữ",
                         kh.getSDT(),
                         kh.getEmail(),
-                        kh.getMaNV(),};
+                        nv.getTenNV()
+                    };
                     dtm.addRow(rdt);
                 }
             } catch (Exception e) {
@@ -996,7 +998,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    
     void fillTableLT() {
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHangLT.getModel();
         dtm.setRowCount(0);
@@ -1016,7 +1018,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
                         kh.isGioiTinh() ? "Nam" : "Nữ",
                         kh.getSDT(),
                         kh.getEmail(),
-                        kh.getMaNV(),};
+                        nv.getTenNV(),};
                     dtm.addRow(rdt);
                 }
             } catch (Exception e) {
@@ -1025,27 +1027,29 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    
     void clearForm() {
         KhachHang kh = new KhachHang();
         this.setForm(kh);
         this.row = -1;
         StatusButton();
     }
-
+    
     void update() {
-        KhachHang kh = getForm();
-        try {
-            daoKh.update(kh);
-            this.fillTable();
-            clearForm();
-            MsgBox.alert(this, "Cap nhat thanh cong!");
-        } catch (Exception e) {
-            MsgBox.alert(this, "Cap nhat that bai!");
-            e.printStackTrace();
+        if (checkValidate()) {
+            KhachHang kh = getForm();
+            try {
+                daoKh.update(kh);
+                this.fillTable();
+                clearForm();
+                MsgBox.alert(this, "Cap nhat thanh cong!");
+            } catch (Exception e) {
+                MsgBox.alert(this, "Cap nhat that bai!");
+                e.printStackTrace();
+            }
         }
     }
-
+    
     void delete() {
         if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xoá Khách hàng này?")) {
             try {
@@ -1064,25 +1068,28 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
             }
         }
     }
-
+    
     void insert() {
-        KhachHang kh = getForm();
-        if (!(daoKh.selectById(kh.getMaKH()) == null)) {
-            MsgBox.alert(this, "Ma da ton tai!");
-            return;
-        } else {
-            try {
-                daoKh.insert(kh);
-                this.fillTable();
-                this.clearForm();
-                MsgBox.alert(this, "Them moi thanh cong!");
-            } catch (Exception e) {
-                MsgBox.alert(this, "them moi that bai!");
-                e.printStackTrace();
+        if (checkValidate()) {
+            KhachHang kh = getForm();
+            if (!(daoKh.selectById(kh.getMaKH()) == null)) {
+                MsgBox.alert(this, "Ma da ton tai!");
+                return;
+            } else {
+                try {
+                    daoKh.insert(kh);
+                    this.fillTable();
+                    this.clearForm();
+                    MsgBox.alert(this, "Them moi thanh cong!");
+                } catch (Exception e) {
+                    MsgBox.alert(this, "them moi that bai!");
+                    e.printStackTrace();
+                }
             }
         }
+        
     }
-
+    
     void upDateStatus() {
         NhanVien nv = (NhanVien) cbbManv.getSelectedItem();
         boolean firstDS = TrangKH == 0;
@@ -1094,7 +1101,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         btnNext.setEnabled(!lastDS);
         btnnextLT.setEnabled(!lastLT);
     }
-
+    
     void upDateStatusLT() {
         NhanVien nv = (NhanVien) cbbManvLT.getSelectedItem();
         boolean firstDS = TrangKH == 0;
@@ -1106,7 +1113,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         btnNext.setEnabled(!lastDS);
         btnnextLT.setEnabled(!lastLT);
     }
-
+    
     void StatusButton() {
         boolean edit = (row >= 0);
         txtMa.setEnabled(!edit);
@@ -1114,13 +1121,27 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         btnSua.setEnabled(edit);
         btnXoa.setEnabled(edit);
     }
-
+    
+    void upDateStatusTXT() {
+        boolean firstDS = TrangKH == 0;
+        boolean firstLT = TrangLT == 0;
+        boolean lastDS = daoKh.selectPaging(1, TrangKH + 1, txtTimKiem2.getText()).isEmpty();
+        boolean lastLT = daoKh.selectPaging(1, TrangKH + 1, txtTimKiemLT.getText()).isEmpty();
+        btnlast.setEnabled(!firstDS);
+        btnLastLT.setEnabled(!firstLT);
+        btnNext.setEnabled(!lastDS);
+        btnnextLT.setEnabled(!lastLT);
+    }
+    
     void TimKiem() {
+        Map<String, String> mapNV = daonv.selectHoTenNV();
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHang.getModel();
         dtm.setRowCount(0);
         try {
             String keyword = txtTimKiem2.getText();
-            List<KhachHang> listKh = daoKh.selectByKeyWord(keyword, 1);
+            List<KhachHang> listKh = daoKh.selectByKeyWord(keyword, 1, TrangKH);
+            lblTrangKh.setText(TrangKH + 1 + "");
+            upDateStatusTXT();
             for (KhachHang kh : listKh) {
                 Object[] rdt = new Object[]{
                     kh.getMaKH(),
@@ -1129,7 +1150,8 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
                     kh.isGioiTinh() ? "Nam" : "Nữ",
                     kh.getSDT(),
                     kh.getEmail(),
-                    kh.getMaNV(),};
+                    mapNV.get(kh.getMaNV())
+                };
                 dtm.addRow(rdt);
             }
         } catch (Exception e) {
@@ -1138,13 +1160,16 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         }
         clearForm();
     }
-
+    
     void TimKiemLT() {
+        Map<String, String> mapNV = daonv.selectHoTenNV();
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHangLT.getModel();
         dtm.setRowCount(0);
         try {
             String keyword = txtTimKiemLT.getText();
-            List<KhachHang> listKh = daoKh.selectByKeyWord(keyword, 0);
+            List<KhachHang> listKh = daoKh.selectByKeyWord(keyword, 0, TrangLT);
+            lblTrangKhachHangLT.setText(TrangLT + 1 + "");
+            upDateStatusTXT();
             for (KhachHang kh : listKh) {
                 Object[] rdt = new Object[]{
                     kh.getMaKH(),
@@ -1153,7 +1178,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
                     kh.isGioiTinh() ? "Nam" : "Nữ",
                     kh.getSDT(),
                     kh.getEmail(),
-                    kh.getMaNV(),};
+                    mapNV.get(kh.getMaNV())};
                 dtm.addRow(rdt);
             }
         } catch (Exception e) {
@@ -1162,7 +1187,7 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         }
         clearForm();
     }
-
+    
     void khoiPhuc() {
         if (tblKhachHangLT.getSelectedRow() >= 0) {
             if (MsgBox.confirm(this, "Bạn có chắc muốn khôi phục khách hàng này?")) {
@@ -1178,5 +1203,30 @@ public class QuanLyKhachHangFrame extends javax.swing.JFrame {
         } else {
             MsgBox.alert(this, "Vui lòng chọn nhân viên cần khách hàng!");
         }
+    }
+    
+    boolean checkValidate() {
+        String pSDT = "^0[0-9]{9}$";
+        if (txtMa.getText().length() == 0) {
+            MsgBox.alert(this, "Vui lòng nhập mã khách hàng!");
+            txtMa.requestFocus();
+            return false;
+        } else if (txtHoTen.getText().length() == 0) {
+            MsgBox.alert(this, "Vui lòng nhập tên khách hàng!");
+            txtHoTen.requestFocus();
+            return false;
+        } else if (txtNgaySinh.getDate() == null) {
+            MsgBox.alert(this, "Vui lòng nhập ngày sinh khách hàng!");;
+            return false;
+        } else if (txtSDT.getText().length() == 0) {
+            MsgBox.alert(this, "Vui lòng nhập số điện thoại khách hàng!");
+            txtSDT.requestFocus();
+            return false;
+        } else if (!txtSDT.getText().matches(pSDT)) {
+            MsgBox.alert(this, "SDT không chính xác!");
+            txtSDT.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

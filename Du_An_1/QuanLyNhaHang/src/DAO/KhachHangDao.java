@@ -100,9 +100,9 @@ public class KhachHangDao implements SystemDAO<KhachHang, Integer> {
         return this.selectBySql("Select *from KhachHang");
     }
 
-    public List<KhachHang> selectByKeyWord(String keyWord, int status) {
-        String sql = "SELECT*FROM KHACHHANG WHERE TrangThai =? AND(MaKH LIKE ? OR TenKH LIKE ? OR SDT LIKE ?)";
-        return this.selectBySql(sql,status ,"%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
+    public List<KhachHang> selectByKeyWord(String keyWord, int status,int pageIndex) {
+        String sql = "SELECT*FROM KHACHHANG WHERE TrangThai =? AND(MaKH LIKE ? OR TenKH LIKE ? OR SDT LIKE ?) ORDER BY MaKH OFFSET ?*15 ROWS  FETCH NEXT 15 ROWS ONLY";
+        return this.selectBySql(sql,status ,"%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%",pageIndex);
     }
 
     public List<KhachHang> selectPaging(int Status, int pageIndex, String manv) {
