@@ -18,7 +18,9 @@ public class Xjdbc {
 
     static String user = "sa", pass = "hoilamgi";
     static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+
     static String url = "jdbc:sqlserver://localhost\\LAPTOP-1357SSIS\\SQLEXPRESS:1433;databaseName=QuanLyNhaHang";
+
 
     static {
         try {
