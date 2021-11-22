@@ -12,13 +12,24 @@ package Entity;
 public class HoaDon {
 
     private int maHD;
-    private String maKH;
+    private int maKH;
     private String ngayTao;
     private String ghiChu;
     private String maNV;
     private int maSKKM;
     private String maBan;
     boolean trangThai;
+
+    public HoaDon(int maHD, int maKH, String ngayTao, String ghiChu, String maNV, int maSKKM, String maBan, boolean trangThai) {
+        this.maHD = maHD;
+        this.maKH = maKH;
+        this.ngayTao = ngayTao;
+        this.ghiChu = ghiChu;
+        this.maNV = maNV;
+        this.maSKKM = maSKKM;
+        this.maBan = maBan;
+        this.trangThai = trangThai;
+    }
 
     public int getMaHD() {
         return maHD;
@@ -28,11 +39,11 @@ public class HoaDon {
         this.maHD = maHD;
     }
 
-    public String getMaKH() {
+    public int getMaKH() {
         return maKH;
     }
 
-    public void setMaKH(String maKH) {
+    public void setMaKH(int maKH) {
         this.maKH = maKH;
     }
 
@@ -84,20 +95,10 @@ public class HoaDon {
         this.trangThai = trangThai;
     }
 
-    public HoaDon(int maHD, String maKH, String ngayTao, String ghiChu, String maNV, int maSKKM, String maBan, boolean trangThai) {
-        this.maHD = maHD;
-        this.maKH = maKH;
-        this.ngayTao = ngayTao;
-        this.ghiChu = ghiChu;
-        this.maNV = maNV;
-        this.maSKKM = maSKKM;
-        this.maBan = maBan;
-        this.trangThai = trangThai;
-    }
-
     @Override
     public String toString() {
         return "HoaDon{" + "maHD=" + maHD + ", maKH=" + maKH + ", ngayTao=" + ngayTao + ", ghiChu=" + ghiChu + ", maNV=" + maNV + ", maSKKM=" + maSKKM + ", maBan=" + maBan + ", trangThai=" + trangThai + '}';
     }
 
+  
 }

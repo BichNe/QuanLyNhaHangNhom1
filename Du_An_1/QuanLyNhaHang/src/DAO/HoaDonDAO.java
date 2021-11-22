@@ -44,7 +44,7 @@ public class HoaDonDAO implements SystemDAO<HoaDon, Integer> {
         try {
             ResultSet rs = Xjdbc.query(sql, args);
             while (rs.next()) {
-                list.add(new HoaDon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getBoolean(8)));
+                list.add(new HoaDon(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getBoolean(8)));
             }
 
             rs.getStatement().getConnection().close();
