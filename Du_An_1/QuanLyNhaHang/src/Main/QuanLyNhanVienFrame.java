@@ -120,7 +120,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
         boolean firstDS = pageIndexDS == 0;
         boolean firstLT = pageIndexLT == 0;
         boolean lastDS = daoNV.selectPagingFull(1, pageIndexDS + 1, txtTimDS.getText(), findGioiTinh(cboDS)).isEmpty();
-        boolean lastLT = daoNV.selectPagingFull(1, pageIndexLT + 1, txtTimLT.getText(), findGioiTinh(cboLT)).isEmpty();
+        boolean lastLT = daoNV.selectPagingFull(0, pageIndexLT + 1, txtTimLT.getText(), findGioiTinh(cboLT)).isEmpty();
         btnPreDS.setEnabled(!firstDS);
         btnPreLT.setEnabled(!firstLT);
         btnNextDS.setEnabled(!lastDS);
@@ -176,7 +176,6 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
             if (MsgBox.confirm(this, "Bạn có chắc muốn khôi phục nhân viên này?")) {
 
                 NhanVien nv = daoNV.selectById(tblLuuTru.getValueAt(tblLuuTru.getSelectedRow(), 0).toString());
-                nv.setTrangThai(true);
                 daoNV.update(nv);
                 pageIndexDS = 0;
                 pageIndexLT = 0;
@@ -634,6 +633,11 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
                 cboDSItemStateChanged(evt);
             }
         });
+        cboDS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboDSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1022,6 +1026,10 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         delete();
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void cboDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboDSActionPerformed
 
     /**
      * @param args the command line arguments

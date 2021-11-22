@@ -5,7 +5,6 @@
  */
 package Main;
 
-import DAO.NhanVienDAO;
 import Untils.Auth;
 import Untils.MsgBox;
 import Untils.Ximage;
@@ -25,10 +24,6 @@ public class TrangChuFrame extends javax.swing.JFrame {
     public TrangChuFrame() {
         initComponents();
         init();
-
-        Auth.user = new NhanVienDAO().selectById("OK03");
-
-
     }
 
     /**
