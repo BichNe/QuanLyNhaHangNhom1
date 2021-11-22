@@ -33,8 +33,8 @@ public class LoginFrame extends javax.swing.JFrame {
         new ChaoDiaLog(this, true).setVisible(true);
         setLocationRelativeTo(null);
         setResizable(false);
-        
-        
+        txtMatKhau.setText("123");
+        txtTenDangNhap.setText("NV01");
         hidePass();
         matKhauFocusLost();
     }

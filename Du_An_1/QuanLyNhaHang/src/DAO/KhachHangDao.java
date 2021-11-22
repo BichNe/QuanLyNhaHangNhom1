@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class KhachHangDao implements SystemDAO<KhachHang, Integer> {
 
-    String SQL_Insert = "insert into KhachHang values(?,?,?,?,?,?,?)";
+    String SQL_Insert = "insert into KhachHang values(?,?,?,?,?,?,?,1)";
     String SQL_Update = "update KhachHang set TenKH=?, SDT=?, Email=?, NgaySinh=?,GioiTinh=?,TrangThai=1 WHERE MaKH =?";
     String SQL_Delete = "update KhachHang set TrangThai=0 where MaKH=?";
     String SQL_SelectPaging = "SELECT * FROM dbo.KhachHang WHERE TrangThai = ?  AND Manv like ? ORDER BY MaKH OFFSET ?*15 ROWS  FETCH NEXT 15 ROWS ONLY";
@@ -27,13 +27,13 @@ public class KhachHangDao implements SystemDAO<KhachHang, Integer> {
     @Override
     public int insert(KhachHang entity) {
         return Xjdbc.update(SQL_Insert,
+                entity.getMaKH(),
                 entity.getTenKH(),
                 entity.getSDT(),
                 entity.getEmail(),
                 entity.getNgaysinh(),
                 entity.isGioiTinh(),
-                entity.getMaNV(),
-                entity.isTrangThai());
+                entity.getMaNV());
     }
 
     @Override
@@ -100,9 +100,9 @@ public class KhachHangDao implements SystemDAO<KhachHang, Integer> {
         return this.selectBySql("Select *from KhachHang");
     }
 
-    public List<KhachHang> selectByKeyWord(String keyWord) {
-        String sql = "SELECT*FROM KHACHHANG WHERE MaKH LIKE ? OR TenKH LIKE ? OR SDT LIKE ?";
-        return this.selectBySql(sql, "%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%");
+    public List<KhachHang> selectByKeyWord(String keyWord, int status,int pageIndex) {
+        String sql = "SELECT*FROM KHACHHANG WHERE TrangThai =? AND(MaKH LIKE ? OR TenKH LIKE ? OR SDT LIKE ?) ORDER BY MaKH OFFSET ?*15 ROWS  FETCH NEXT 15 ROWS ONLY";
+        return this.selectBySql(sql,status ,"%" + keyWord + "%", "%" + keyWord + "%", "%" + keyWord + "%",pageIndex);
     }
 
     public List<KhachHang> selectPaging(int Status, int pageIndex, String manv) {
