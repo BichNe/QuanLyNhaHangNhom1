@@ -5,6 +5,8 @@
  */
 package Entity;
 
+import javax.xml.crypto.Data;
+
 
 /**
  *
@@ -23,6 +25,9 @@ public class ThucPham {
     private String ghiChu;
     private boolean trangThai;
 
+    public ThucPham() {
+    }
+
     public ThucPham(int maTP, String maLoaiTP, String tenTP, String ngayNhap, int giaNhap, int soLuong, String donViTinh, String maNV, String NCC, String ghiChu, boolean trangThai) {
         this.maTP = maTP;
         this.maLoaiTP = maLoaiTP;
@@ -35,9 +40,6 @@ public class ThucPham {
         this.NCC = NCC;
         this.ghiChu = ghiChu;
         this.trangThai = trangThai;
-    }
-
-    public ThucPham() {
     }
 
     public int getMaTP() {
@@ -127,6 +129,10 @@ public class ThucPham {
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
+
+    
+
+    
 
     @Override
     public String toString() {

@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 public class Ximage {
 
     public static Image getAppIcon() {
-        return new ImageIcon("images/logos.png").getImage();
+        return new ImageIcon("images/logos.jpg").getImage();
     }
 
     public static void save(File src) {
