@@ -16,9 +16,13 @@ import java.sql.ResultSet;
  */
 public class Xjdbc {
 
-    static String user = "sa", pass = "123";
+//    static String user = "sa", pass = "123";
+//    static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+//    static String url = "jdbc:sqlserver://localhost\\LAPTOP-S81INCKV:1433;databaseName=QuanLyNhaHang";
     static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    static String url = "jdbc:sqlserver://localhost\\LAPTOP-S81INCKV:1433;databaseName=QuanLyNhaHang";
+    static String url = "jdbc:sqlserver://localhost\\DESKTOP-3Q9DDTP\\SQLEXPRESS:1433;databaseName=QuanLyNhaHang";
+    static String user = "sa";
+    static String pass = "hoa212";
 
     static {
         try {

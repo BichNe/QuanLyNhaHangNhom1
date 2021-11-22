@@ -120,7 +120,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
         boolean firstDS = pageIndexDS == 0;
         boolean firstLT = pageIndexLT == 0;
         boolean lastDS = daoNV.selectPagingFull(1, pageIndexDS + 1, txtTimDS.getText(), findGioiTinh(cboDS)).isEmpty();
-        boolean lastLT = daoNV.selectPagingFull(1, pageIndexLT + 1, txtTimLT.getText(), findGioiTinh(cboLT)).isEmpty();
+        boolean lastLT = daoNV.selectPagingFull(0, pageIndexLT + 1, txtTimLT.getText(), findGioiTinh(cboLT)).isEmpty();
         btnPreDS.setEnabled(!firstDS);
         btnPreLT.setEnabled(!firstLT);
         btnNextDS.setEnabled(!lastDS);
