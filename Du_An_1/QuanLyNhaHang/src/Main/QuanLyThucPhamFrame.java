@@ -145,6 +145,7 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
     }
 
     void setForm(ThucPham tp) {
+        txtMa.setText(tp.getMaTP()+"");
         txtTen.setText(tp.getTenTP());
         txtSoLuong.setText(String.valueOf(tp.getSoLuong()));
         txtGiaNhap.setText(String.valueOf(tp.getGiaNhap()));
@@ -160,7 +161,7 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
         boolean firstDS = pageIndexDS == 0;
         boolean firstLT = pageIndexLT == 0;
         boolean lastDS = tpdao.selectPagingFull(1, pageIndexDS + 1, txtTimDS.getText(), lstLoaiThucPhams.get(cboDS.getSelectedIndex()).getMaLoaiTP()).isEmpty();
-        boolean lastLT = tpdao.selectPagingFull(1, pageIndexLT + 1, txtTimLT.getText(), lstLoaiThucPhams.get(cboDS.getSelectedIndex()).getMaLoaiTP()).isEmpty();
+        boolean lastLT = tpdao.selectPagingFull(0, pageIndexLT + 1, txtTimLT.getText(), lstLoaiThucPhams.get(cboDS.getSelectedIndex()).getMaLoaiTP()).isEmpty();
         btnPreDS.setEnabled(!firstDS);
         btnPreLT.setEnabled(!firstLT);
         btnNextDS.setEnabled(!lastDS);
@@ -178,7 +179,7 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
         if (tblLT.getSelectedRow() >= 0) {
             if (MsgBox.confirm(this, "Bạn có chắc muốn khôi phục thực phẩm này?")) {
 
-                ThucPham tp = tpdao.selectById(tblLT.getValueAt(tblLT.getSelectedRow(), 0).toString());
+                ThucPham tp = tpdao.selectById(Integer.parseInt(tblLT.getValueAt(tblLT.getSelectedRow(), 0).toString()));
                 tp.setTrangThai(true);
                 tpdao.update(tp);
                 pageIndexDS = 0;
@@ -195,6 +196,7 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
 
     ThucPham getForm() {
         ThucPham tp = new ThucPham();
+        tp.setMaTP(Integer.parseInt(txtMa.getText()));
         tp.setTenTP(txtTen.getText());
         tp.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
         tp.setNgayNhap(Xdate.toString(txtNgayNhap.getDate(), "yyyy-MM-dd"));
@@ -204,12 +206,13 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
         tp.setNCC(txtNCC.getText());
         tp.setGhiChu(txtMoTa.getText());
         tp.setMaNV(Auth.user.getMaNV());
+        tp.setTrangThai(true);
         return tp;
     }
     
     void chiTiet() {
         row = tblDS.getSelectedRow();
-        setForm(tpdao.selectById(tblDS.getValueAt(row, 0).toString()));
+        setForm(tpdao.selectById(Integer.parseInt(tblDS.getValueAt(row, 0).toString())));
         tabs.setSelectedIndex(0);
         updateStatus();
     }
@@ -249,11 +252,11 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
                 MsgBox.alert(this, "Thêm thực phẩm thành công!");
                 resetForm();
             } catch (Exception e) {
-//                if (MsgBox.confirm(this, "Thêm sản phẩm thất bại!! Bạn có muốn báo lỗi tới nhà phát triển?")) {
-//                        Xmail.writeException(e, getForm());
-//                        Xmail.sendBugs("minhdungvipro@gmail.com");
-//                    }
-                e.printStackTrace();
+                if (MsgBox.confirm(this, "Thêm sản phẩm thất bại!! Bạn có muốn báo lỗi tới nhà phát triển?")) {
+                        Xmail.writeException(e, getForm());
+                        Xmail.sendBugs("minhdungvipro@gmail.com");
+                    }
+                
             }
         }
     }
@@ -270,9 +273,10 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
                 resetForm();
             } catch (Exception e) {
                 if (MsgBox.confirm(this, "Chỉnh sửa sản phẩm thất bại!! Bạn có muốn báo lỗi tới nhà phát triển?")) {
-//                    Xmail.writeException(e, getForm());
-//                    Xmail.sendBugs("minhdungvipro@gmail.com");
+                    Xmail.writeException(e, getForm());
+                    Xmail.sendBugs("minhdungvipro@gmail.com");
                 }
+
             }
         }
     }
@@ -280,7 +284,7 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
     void delete() {
         if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xoá thực phẩm này?")) {
             try {
-                tpdao.delete(txtMa.getText());
+                tpdao.delete(Integer.parseInt(txtMa.getText()));
                 pageIndexDS = 0;
                 pageIndexLT = 0;
                 fillToDanhSach();
@@ -289,8 +293,8 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
                 resetForm();
             } catch (Exception e) {
                 if (MsgBox.confirm(this, "Xoá thực phẩm thất bại!! Bạn có muốn báo lỗi tới nhà phát triển?")) {
-//                   Xmail.writeException(e, getForm());
-//                    Xmail.sendBugs("minhdungvipro@gmail.com"); 
+                   Xmail.writeException(e, getForm());
+                    Xmail.sendBugs("minhdungvipro@gmail.com"); 
                 }
             }
         }
@@ -725,6 +729,11 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
                 txtTimDSActionPerformed(evt);
             }
         });
+        txtTimDS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimDSKeyReleased(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(0, 51, 153));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -927,6 +936,11 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
         txtTimLT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTimLTActionPerformed(evt);
+            }
+        });
+        txtTimLT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimLTKeyReleased(evt);
             }
         });
 
@@ -1194,14 +1208,12 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
 
     private void txtTimDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimDSActionPerformed
         // TODO add your handling code here:
-        pageIndexDS = 0;
-        fillToDanhSach();
+        
     }//GEN-LAST:event_txtTimDSActionPerformed
 
     private void txtTimLTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimLTActionPerformed
         // TODO add your handling code here:
-        pageIndexLT = 0;
-        fillToLuuTru();
+        
     }//GEN-LAST:event_txtTimLTActionPerformed
 
     private void btnPreDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreDSActionPerformed
@@ -1252,6 +1264,18 @@ public class QuanLyThucPhamFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         resetForm();
     }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void txtTimDSKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimDSKeyReleased
+        // TODO add your handling code here:
+        pageIndexDS = 0;
+        fillToDanhSach();
+    }//GEN-LAST:event_txtTimDSKeyReleased
+
+    private void txtTimLTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimLTKeyReleased
+        // TODO add your handling code here:
+        pageIndexLT = 0;
+        fillToLuuTru();
+    }//GEN-LAST:event_txtTimLTKeyReleased
 
     /**
      * @param args the command line arguments

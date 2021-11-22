@@ -809,6 +809,7 @@
                         <Component class="javax.swing.JTextField" name="txtTimDS">
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimDSActionPerformed"/>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimDSKeyReleased"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton7">
@@ -1186,6 +1187,7 @@
                         <Component class="javax.swing.JTextField" name="txtTimLT">
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimLTActionPerformed"/>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimLTKeyReleased"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="jButton6">

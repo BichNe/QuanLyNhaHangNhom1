@@ -16,10 +16,10 @@ import java.util.Map;
  *
  * @author Admin
  */
-public class ThucPhamDAO implements SystemDAO<ThucPham, String>{
-    String SQL_Insert = "INSERT INTO ThucPham values(?,?,?,?,?,?,?,?,?,?)";
+public class ThucPhamDAO implements SystemDAO<ThucPham, Integer>{
+    String SQL_Insert = "INSERT INTO ThucPham values(?,?,?,?,?,?,?,?,?,1)";
     String SQL_Update = "UPDATE ThucPham SET MaLoaiTP=?, TenTP=?, NgayNhap=?, GiaNhap=?, SoLuong=?,DonViTinh=?,MaNV=?,NCC=?,GhiChu=?, TrangThai=? where MaTP=?";
-    String SQL_Delete = "DELETE FROM ThucPham WHERE MaTP=?";
+    String SQL_Delete = "update ThucPham set TrangThai=0 where MaTP=?";
     String SQL_SelectPaging = "SELECT * FROM dbo.ThucPham WHERE TrangThai = ? AND (MaTP LIKE ? OR TenTP LIKE ? OR NCC LIKE ?) ORDER BY MaTP OFFSET ?*15 ROWS  FETCH NEXT 15 ROWS ONLY";
     String SQL_SelectTenLoaiTP = "select MaLoaiTP,TenLoaiTP from LoaiThucPham ";
     String SQL_SelectID = "SELECT * FROM ThucPham WHERE MaTP=?";
@@ -35,8 +35,8 @@ public class ThucPhamDAO implements SystemDAO<ThucPham, String>{
                 entity.getDonViTinh(),
                 entity.getMaNV(),
                 entity.getNCC(),
-                entity.getGhiChu(),
-                entity.isTrangThai());
+                entity.getGhiChu());
+//                entity.isTrangThai());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ThucPhamDAO implements SystemDAO<ThucPham, String>{
     }
 
     @Override
-    public int delete(String id) {
+    public int delete(Integer id) {
         return Xjdbc.update(SQL_Delete, id);
     }
 
@@ -74,6 +74,7 @@ public class ThucPhamDAO implements SystemDAO<ThucPham, String>{
                 tp.setGiaNhap(rs.getInt("GiaNhap"));
                 tp.setSoLuong(rs.getInt("SoLuong"));
                 tp.setDonViTinh(rs.getString("DonViTinh"));
+                tp.setGhiChu(rs.getString("GhiChu"));
                 tp.setMaNV(rs.getString("MaNV"));
                 tp.setNCC(rs.getString("NCC"));
                 tp.setTrangThai(rs.getBoolean("TrangThai"));
@@ -111,12 +112,12 @@ public class ThucPhamDAO implements SystemDAO<ThucPham, String>{
     }
 
     @Override
-    public List<ThucPham> selectByKeyWord(String keyWord, int Status) {
+    public List<ThucPham> selectByKeyWord(Integer keyWord, int Status) {
         return null;
     }
 
     @Override
-    public ThucPham selectById(String id) {
+    public ThucPham selectById(Integer id) {
         List<ThucPham> list = this.selectBySql(SQL_SelectID, id);
         if (list.isEmpty()) {
             return null;
