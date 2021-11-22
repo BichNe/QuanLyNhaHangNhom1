@@ -24,6 +24,8 @@ public class TrangChuFrame extends javax.swing.JFrame {
     public TrangChuFrame() {
         initComponents();
         init();
+
+
     }
 
     /**
@@ -562,8 +564,7 @@ public class TrangChuFrame extends javax.swing.JFrame {
         setResizable(true);
         setTitle("HỆ THỐNG QUẢN LÝ NHÀ HÀNG");
         setIconImage(Ximage.getAppIcon());
-
-        //Auth.user = new NhanVienDAO().selectById("thaidp3");
+        Auth.user = new NhanVienDAO().selectById("NV01");
         lblHinhAnh.setIcon(Ximage.read(Auth.user.getAnhNV(), lblHinhAnh.getWidth()-10, lblHinhAnh.getHeight()-10));
         lblHoten.setText(Auth.user.getTenNV());
         int color = Integer.parseInt(Auth.user.getMauNen(), 16);
