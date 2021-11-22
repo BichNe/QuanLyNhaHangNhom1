@@ -21,7 +21,7 @@ public class Xjdbc {
 
     static String url = "jdbc:sqlserver://THAIDP\\SQLEXPRESS:1433;databaseName=QuanLyNhaHang";
 
-    static String url = "jdbc:sqlserver://localhost\\LAPTOP-S81INCKV:1433;databaseName=QuanLyNhaHanga";
+//    static String url = "jdbc:sqlserver://localhost\\LAPTOP-S81INCKV:1433;databaseName=QuanLyNhaHanga";
 
 
     static {

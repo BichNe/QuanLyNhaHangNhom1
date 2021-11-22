@@ -45,7 +45,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
         setResizable(true);
         setTitle("QUẢN LÝ NHÂN VIÊN");
         prepareGUI();
-        tabs.setSelectedIndex(1);
+        tabs.setSelectedIndex(0);
         modelDS = (DefaultTableModel) tblNhanVien.getModel();
         modelLT = (DefaultTableModel) tblLuuTru.getModel();
         daoNV = new NhanVienDAO();
@@ -209,7 +209,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
     void chiTiet() {
         row = tblNhanVien.getSelectedRow();
         setForm(daoNV.selectById(tblNhanVien.getValueAt(row, 0).toString()));
-        tabs.setSelectedIndex(0);
+        tabs.setSelectedIndex(1);
         updateStatus();
     }
 
@@ -651,7 +651,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
                                                             .addGap(30, 30, 30)
                                                             .addComponent(rdoNu))
                                                         .addComponent(rdoCNH))
-                                                    .addGap(0, 230, Short.MAX_VALUE))))
+                                                    .addGap(0, 233, Short.MAX_VALUE))))
                                         .addGroup(jPanel3Layout.createSequentialGroup()
                                             .addGap(41, 41, 41)
                                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,7 +668,7 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnThem, btnXoa});
@@ -746,51 +746,6 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        tabs.addTab("Thông tin", jPanel5);
-
-        jPanel10.setBackground(new java.awt.Color(255, 217, 102));
-
-        txtTimDS.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimDSKeyReleased(evt);
-            }
-        });
-
-        cboDS.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cboDS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
-        cboDS.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboDSItemStateChanged(evt);
-            }
-        });
-        cboDS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboDSActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTimDS, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(cboDS, 0, 148, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtTimDS, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1045,10 +1000,6 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         delete();
     }//GEN-LAST:event_btnXoaActionPerformed
-
-    private void cboDSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboDSActionPerformed
 
     /**
      * @param args the command line arguments
