@@ -109,7 +109,7 @@ public class SanPhamDAO implements SystemDAO<SanPham, String> {
     }
 
     public List<SanPham> selectPagingFull(int Status, int pageIndex, String keyWord, String loaiSP, int giaMin, int giaMax) {
-        List<SanPham> list = this.selectBySql(SQL_SelectPaging, Status, "%" + keyWord + "%", "%" + keyWord + "%","%" + loaiSP + "%" , giaMin, giaMax, pageIndex);
+        List<SanPham> list = this.selectBySql(SQL_SelectPaging, Status, "%" + keyWord + "%", "%" + keyWord + "%", "%" + loaiSP + "%", giaMin, giaMax, pageIndex);
         return list;
     }
 

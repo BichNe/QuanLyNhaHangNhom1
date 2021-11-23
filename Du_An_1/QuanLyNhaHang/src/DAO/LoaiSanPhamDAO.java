@@ -44,4 +44,6 @@ public class LoaiSanPhamDAO {
         return selectBySql(SELECT_ID,ma).get(0);
     }
 
+   
+
 }
